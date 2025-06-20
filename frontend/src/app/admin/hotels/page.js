@@ -51,6 +51,145 @@ const CreateButton = styled.button`
   }
 `;
 
+const SearchBar = styled.div`
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+`;
+
+const SearchInput = styled.input`
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid #e1e8ed;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+  outline: none;
+
+  &:focus {
+    border-color: #667eea;
+  }
+`;
+
+const FilterBar = styled.div`
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+`;
+
+const FilterSelect = styled.select`
+  padding: 0.5rem 1rem;
+  border: 2px solid #e1e8ed;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  background: white;
+  cursor: pointer;
+
+  &:focus {
+    border-color: #667eea;
+  }
+`;
+
+const HotelsGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 2rem;
+`;
+
+const HotelCard = styled.div`
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
+`;
+
+const HotelImage = styled.div`
+  height: 200px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  color: white;
+  position: relative;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+`;
+
+const HotelContent = styled.div`
+  padding: 1.5rem;
+`;
+
+const HotelName = styled.h3`
+  color: #2c3e50;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 1rem 0;
+`;
+
+const HotelInfo = styled.div`
+  color: #7f8c8d;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+
+  div {
+    margin-bottom: 0.5rem;
+  }
+`;
+
+const HotelPrice = styled.div`
+  color: #27ae60;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+`;
+
+const HotelActions = styled.div`
+  display: flex;
+  gap: 0.5rem;
+`;
+
+const ActionButton = styled.button`
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &.edit {
+    background: #3498db;
+    color: white;
+
+    &:hover {
+      background: #2980b9;
+    }
+  }
+
+  &.delete {
+    background: #e74c3c;
+    color: white;
+
+    &:hover {
+      background: #c0392b;
+    }
+  }
+`;
+
 const Modal = styled.div`
   position: fixed;
   top: 0;
@@ -192,6 +331,18 @@ const FileInputButton = styled.button`
   }
 `;
 
+const ImagePreview = styled.div`
+  margin-top: 1rem;
+  text-align: center;
+
+  img {
+    max-width: 200px;
+    max-height: 150px;
+    border-radius: 8px;
+    border: 2px solid #e1e8ed;
+  }
+`;
+
 const ErrorMessage = styled.p`
   color: #e74c3c;
   font-size: 0.8rem;
@@ -202,160 +353,58 @@ const SubmitButton = styled.button`
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   border: none;
-  padding: 0.75rem;
+  padding: 1rem;
   border-radius: 8px;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
   transition: transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 
-  &:hover {
+  &:hover:not(:disabled) {
     transform: translateY(-2px);
   }
 
   &:disabled {
     opacity: 0.6;
     cursor: not-allowed;
-    transform: none;
-  }
-`;
-
-const HotelsGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1.5rem;
-`;
-
-const HotelCard = styled.div`
-  background: white;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease;
-
-  &:hover {
-    transform: translateY(-4px);
-  }
-`;
-
-const HotelImage = styled.div`
-  height: 200px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 3rem;
-`;
-
-const HotelContent = styled.div`
-  padding: 1.5rem;
-`;
-
-const HotelName = styled.h3`
-  color: #2c3e50;
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-`;
-
-const HotelInfo = styled.div`
-  color: #7f8c8d;
-  font-size: 0.9rem;
-  margin-bottom: 1rem;
-`;
-
-const HotelPrice = styled.div`
-  color: #27ae60;
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-`;
-
-const HotelActions = styled.div`
-  display: flex;
-  gap: 0.5rem;
-`;
-
-const ActionButton = styled.button`
-  flex: 1;
-  padding: 0.5rem;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: background-color 0.3s ease;
-
-  &.edit {
-    background: #f39c12;
-    color: white;
-
-    &:hover {
-      background: #e67e22;
-    }
-  }
-
-  &.delete {
-    background: #e74c3c;
-    color: white;
-
-    &:hover {
-      background: #c0392b;
-    }
   }
 `;
 
 const LoadingSpinner = styled.div`
-  display: inline-block;
   width: 20px;
   height: 20px;
-  border: 3px solid rgba(255, 255, 255, 0.3);
+  border: 2px solid #ffffff;
+  border-top: 2px solid transparent;
   border-radius: 50%;
-  border-top-color: #fff;
-  animation: spin 1s ease-in-out infinite;
+  animation: spin 1s linear infinite;
 
   @keyframes spin {
-    to { transform: rotate(360deg); }
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
   }
 `;
 
-export default function HotelsPage() {
-  const [hotels, setHotels] = useState([
-    {
-      id: 1,
-      name: 'Hôtel Le Palace',
-      address: '123 Avenue des Champs-Élysées, Paris',
-      email: 'contact@lepalace.fr',
-      phone: '+33 1 42 86 10 28',
-      pricePerNight: 250,
-      currency: 'EUR',
-      image: null
-    },
-    {
-      id: 2,
-      name: 'Hôtel Central',
-      address: '456 Rue de la Paix, Lyon',
-      email: 'info@hotelcentral.fr',
-      phone: '+33 4 72 10 30 40',
-      pricePerNight: 180,
-      currency: 'EUR',
-      image: null
-    },
-    {
-      id: 3,
-      name: 'Hôtel Luxe',
-      address: '789 Boulevard de la Croisette, Cannes',
-      email: 'reservation@hotelluxe.fr',
-      phone: '+33 4 93 38 15 45',
-      pricePerNight: 350,
-      currency: 'EUR',
-      image: null
-    }
-  ]);
+const NoHotelsMessage = styled.div`
+  text-align: center;
+  padding: 3rem;
+  color: #7f8c8d;
+  font-size: 1.1rem;
+`;
 
+export default function HotelsPage() {
+  const [hotels, setHotels] = useState([]);
+  const [filteredHotels, setFilteredHotels] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingHotels, setIsLoadingHotels] = useState(true);
   const [errors, setErrors] = useState({});
+  const [searchTerm, setSearchTerm] = useState('');
+  const [currencyFilter, setCurrencyFilter] = useState('');
+  const [priceFilter, setPriceFilter] = useState('');
   const [formData, setFormData] = useState({
     name: '',
     address: '',
@@ -363,7 +412,8 @@ export default function HotelsPage() {
     phone: '',
     pricePerNight: '',
     currency: 'EUR',
-    image: null
+    image: null,
+    imageUrl: ''
   });
 
   const currencies = [
@@ -371,6 +421,70 @@ export default function HotelsPage() {
     { code: 'EUR', name: 'Euro (EUR)' },
     { code: 'USD', name: 'Dollar US (USD)' }
   ];
+
+  // Charger les hôtels depuis l'API
+  const loadHotels = async () => {
+    try {
+      setIsLoadingHotels(true);
+      const token = localStorage.getItem('token');
+      
+      const response = await fetch('http://localhost:5000/api/hotels', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setHotels(data);
+        setFilteredHotels(data);
+      } else {
+        console.error('Erreur lors du chargement des hôtels:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Erreur lors du chargement des hôtels:', error);
+    } finally {
+      setIsLoadingHotels(false);
+    }
+  };
+
+  useEffect(() => {
+    loadHotels();
+  }, []);
+
+  // Filtrer les hôtels basé sur la recherche et les filtres
+  useEffect(() => {
+    let filtered = hotels;
+
+    // Filtre par recherche
+    if (searchTerm) {
+      filtered = filtered.filter(hotel =>
+        hotel.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        hotel.address.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        hotel.email.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    // Filtre par devise
+    if (currencyFilter) {
+      filtered = filtered.filter(hotel => hotel.currency === currencyFilter);
+    }
+
+    // Filtre par prix
+    if (priceFilter) {
+      const [min, max] = priceFilter.split('-').map(Number);
+      filtered = filtered.filter(hotel => {
+        if (max) {
+          return hotel.pricePerNight >= min && hotel.pricePerNight <= max;
+        } else {
+          return hotel.pricePerNight >= min;
+        }
+      });
+    }
+
+    setFilteredHotels(filtered);
+  }, [hotels, searchTerm, currencyFilter, priceFilter]);
 
   const validateForm = () => {
     const newErrors = {};
@@ -407,9 +521,12 @@ export default function HotelsPage() {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
+      // Créer une URL temporaire pour l'aperçu
+      const imageUrl = URL.createObjectURL(file);
       setFormData(prev => ({
         ...prev,
-        image: file
+        image: file,
+        imageUrl: imageUrl
       }));
     }
   };
@@ -424,34 +541,77 @@ export default function HotelsPage() {
     setIsLoading(true);
 
     try {
-      // Simuler l'ajout d'un hôtel
-      const newHotel = {
-        id: hotels.length + 1,
-        ...formData,
-        pricePerNight: parseFloat(formData.pricePerNight)
-      };
+      const token = localStorage.getItem('token');
+      const formDataToSend = new FormData();
+      
+      // Ajouter les données du formulaire
+      formDataToSend.append('name', formData.name);
+      formDataToSend.append('address', formData.address);
+      formDataToSend.append('email', formData.email);
+      formDataToSend.append('phone', formData.phone);
+      formDataToSend.append('pricePerNight', formData.pricePerNight);
+      formDataToSend.append('currency', formData.currency);
+      
+      // Ajouter l'image si elle existe
+      if (formData.image) {
+        formDataToSend.append('image', formData.image);
+      }
 
-      setHotels(prev => [...prev, newHotel]);
-      setShowModal(false);
-      setFormData({
-        name: '',
-        address: '',
-        email: '',
-        phone: '',
-        pricePerNight: '',
-        currency: 'EUR',
-        image: null
+      const response = await fetch('http://localhost:5000/api/hotels', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+        body: formDataToSend
       });
+
+      if (response.ok) {
+        const newHotel = await response.json();
+        setHotels(prev => [newHotel, ...prev]);
+        setShowModal(false);
+        setFormData({
+          name: '',
+          address: '',
+          email: '',
+          phone: '',
+          pricePerNight: '',
+          currency: 'EUR',
+          image: null,
+          imageUrl: ''
+        });
+      } else {
+        const errorData = await response.json();
+        console.error('Erreur lors de l\'ajout de l\'hôtel:', errorData);
+        alert('Erreur lors de l\'ajout de l\'hôtel: ' + (errorData.message || 'Erreur inconnue'));
+      }
     } catch (error) {
       console.error('Erreur lors de l\'ajout de l\'hôtel:', error);
+      alert('Erreur lors de l\'ajout de l\'hôtel');
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = async (id) => {
     if (confirm('Êtes-vous sûr de vouloir supprimer cet hôtel ?')) {
-      setHotels(prev => prev.filter(hotel => hotel.id !== id));
+      try {
+        const token = localStorage.getItem('token');
+        const response = await fetch(`http://localhost:5000/api/hotels/${id}`, {
+          method: 'DELETE',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (response.ok) {
+          setHotels(prev => prev.filter(hotel => hotel._id !== id));
+        } else {
+          console.error('Erreur lors de la suppression de l\'hôtel');
+        }
+      } catch (error) {
+        console.error('Erreur lors de la suppression de l\'hôtel:', error);
+      }
     }
   };
 
@@ -464,12 +624,25 @@ export default function HotelsPage() {
     return symbols[currency] || currency;
   };
 
+  if (isLoadingHotels) {
+    return (
+      <AuthGuard>
+        <AdminLayout pageTitle="Liste des hôtels">
+          <div style={{ textAlign: 'center', padding: '3rem' }}>
+            <LoadingSpinner />
+            <p>Chargement des hôtels...</p>
+          </div>
+        </AdminLayout>
+      </AuthGuard>
+    );
+  }
+
   return (
     <AuthGuard>
       <AdminLayout pageTitle="Liste des hôtels">
         <HeaderBar>
           <HotelCount>
-            <CountNumber>{hotels.length}</CountNumber>
+            <CountNumber>{filteredHotels.length}</CountNumber>
             <CountLabel>Hôtels</CountLabel>
           </HotelCount>
           <CreateButton onClick={() => setShowModal(true)}>
@@ -477,35 +650,80 @@ export default function HotelsPage() {
           </CreateButton>
         </HeaderBar>
 
-        <HotelsGrid>
-          {hotels.map((hotel) => (
-            <HotelCard key={hotel.id}>
-              <HotelImage>
-                {hotel.image ? '🖼️' : '🏨'}
-              </HotelImage>
-              <HotelContent>
-                <HotelName>{hotel.name}</HotelName>
-                <HotelInfo>
-                  <div>📍 {hotel.address}</div>
-                  <div>📧 {hotel.email}</div>
-                  <div>📞 {hotel.phone}</div>
-                </HotelInfo>
-                <HotelPrice>
-                  {getCurrencySymbol(hotel.currency)} {hotel.pricePerNight} / nuit
-                </HotelPrice>
-                <HotelActions>
-                  <ActionButton className="edit">✏️ Modifier</ActionButton>
-                  <ActionButton 
-                    className="delete"
-                    onClick={() => handleDelete(hotel.id)}
-                  >
-                    🗑️ Supprimer
-                  </ActionButton>
-                </HotelActions>
-              </HotelContent>
-            </HotelCard>
-          ))}
-        </HotelsGrid>
+        <SearchBar>
+          <SearchInput
+            type="text"
+            placeholder="Rechercher par nom, adresse ou email..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <FilterBar>
+            <FilterSelect
+              value={currencyFilter}
+              onChange={(e) => setCurrencyFilter(e.target.value)}
+            >
+              <option value="">Toutes les devises</option>
+              {currencies.map(currency => (
+                <option key={currency.code} value={currency.code}>
+                  {currency.name}
+                </option>
+              ))}
+            </FilterSelect>
+            <FilterSelect
+              value={priceFilter}
+              onChange={(e) => setPriceFilter(e.target.value)}
+            >
+              <option value="">Tous les prix</option>
+              <option value="0-100">0 - 100</option>
+              <option value="100-200">100 - 200</option>
+              <option value="200-300">200 - 300</option>
+              <option value="300-">300+</option>
+            </FilterSelect>
+          </FilterBar>
+        </SearchBar>
+
+        {filteredHotels.length === 0 ? (
+          <NoHotelsMessage>
+            {searchTerm || currencyFilter || priceFilter 
+              ? 'Aucun hôtel ne correspond à vos critères de recherche'
+              : 'Aucun hôtel trouvé'
+            }
+          </NoHotelsMessage>
+        ) : (
+          <HotelsGrid>
+            {filteredHotels.map((hotel) => (
+              <HotelCard key={hotel._id}>
+                <HotelImage>
+                  {hotel.image ? (
+                    <img src={hotel.image} alt={hotel.name} />
+                  ) : (
+                    '🏨'
+                  )}
+                </HotelImage>
+                <HotelContent>
+                  <HotelName>{hotel.name}</HotelName>
+                  <HotelInfo>
+                    <div>📍 {hotel.address}</div>
+                    <div>📧 {hotel.email}</div>
+                    <div>📞 {hotel.phone}</div>
+                  </HotelInfo>
+                  <HotelPrice>
+                    {getCurrencySymbol(hotel.currency)} {hotel.pricePerNight} / nuit
+                  </HotelPrice>
+                  <HotelActions>
+                    <ActionButton className="edit">✏️ Modifier</ActionButton>
+                    <ActionButton 
+                      className="delete"
+                      onClick={() => handleDelete(hotel._id)}
+                    >
+                      🗑️ Supprimer
+                    </ActionButton>
+                  </HotelActions>
+                </HotelContent>
+              </HotelCard>
+            ))}
+          </HotelsGrid>
+        )}
 
         {showModal && (
           <Modal onClick={() => setShowModal(false)}>
@@ -627,6 +845,11 @@ export default function HotelsPage() {
                       </FileInputButton>
                     </label>
                   </FileInput>
+                  {formData.imageUrl && (
+                    <ImagePreview>
+                      <img src={formData.imageUrl} alt="Aperçu" />
+                    </ImagePreview>
+                  )}
                 </FormGroup>
 
                 <SubmitButton type="submit" disabled={isLoading}>
